@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="css/custom.css" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body onload="name()">
+	<div class="wrapper">
+
+		<img src="images/gun.png" id="gun" alt="" />
+	</div>
+</body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+
+		var shaking = false;
+		var playing = false;
+		var wait = false;
+		//var socket = io.connect('http://192.168.1.165');
+		var baseURL = "https://leanback.herokuapp.com/";
+		var socket = io.connect(baseURL);
+
+		url = document.URL;
+		fragments = url.split('/');
+		roomId = fragments[fragments.length - 1];
+
+
+		//join room
+		socket.emit('new_room', roomId);
+
+			window.addEventListener('devicemotion', function(event) {
+				  var k = event.acceleration.x;
+				  if(k>5 && !shaking){
+					  if(playing){
+	  					socket.emit('add', {player:'p1',roomId : roomId});
+	  					shaking = true;
+						//playing = false;
+					  }
+				}
+
+			});
+
+			function name(){
+				var name1 = prompt("Enter Name");
+				if(name1!=null){
+
+					socket.emit('add_name', {name: name1, player: 'p1',roomId : roomId});
+				}
+			}
+
+
+
+			socket.on('started', function(){
+				playing = true;
+				//alert(playing);
+			});
+	</script>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="css/custom.css" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body >
+	<div class="wrapper" id="wrapper">
+		<div class="name1">Player 1</div>
+		<div class="name2">Player 2</div>
+		<div id="ground"></div>
+		<div id="p1" class="flip"></div>
+		<div id="p2"></div>
+		<div id="cactus"></div>
+		<div id="start" onclick="shootout()">PLAY</div>
+		<div id="counter"></div>
+		<audio src="assets/bang.mp3" id="bang"></audio>
+	</div>
+	<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+		function randomString(len) {
+			    var chars = "1234567890abcdefghijklmnopqrstuvwxyz";
+			    //var chars = "1";
+			    var string_length = len;
+			    var randomstring = '';
+			    for (var i = 0; i < string_length; i++) {
+			        var rnum = Math.floor(Math.random() * chars.length);
+			        randomstring += chars.substring(rnum, rnum + 1);
+			    }
+			    return randomstring;
+			}
+
+			//var baseURL = "http://192.168.1.109:3000/"
+			var baseURL = "https://leanback.herokuapp.com/";
+			var roomURL = baseURL+"mobile/"+roomId;
+			var socket = io.connect(baseURL);
+			var roomId = randomString(4);
+			//var roomId = randomString(1);
+
+			//start a room
+			//generate url for mobile to join room
+			//restrict room for two clients
+			//listen for incoming actions
+
+
+			//room created
+			socket.emit('new_room', roomId);
+
+			//url for mobile generated
+			console.log('mobile-link- '+baseURL+'p1/'+roomId);
+
+			var playing = true;
+			//var socket = io.connect('http://192.168.1.165');
+			var p1 = "Player 1", p2 = "Player 2";
+
+			socket.on('fire', function(data){
+				console.log(data.player);
+				if(playing){
+					if(data.player=="p1"){
+						$('#p1').css('background-position', 'center');
+						$('#counter').html(p1+' WINS');
+						$('#p2').css({'background-position': 'bottom','top':'60%'});
+						$('#p2').addClass('dead_2');
+						console.log('1 wins');
+						var bang = $("#bang")[0];
+						bang.play();
+
+					}
+					else {
+						$('#p2').css('background-position', 'center');
+						$('#counter').html(p2+' WINS');
+						$('#p1').css({'background-position': 'bottom','top':'60%'});
+						$('#p1').removeClass("flip").addClass('dead');
+						console.log('2 wins');
+						var bang = $("#bang")[0];
+						bang.play();
+					}
+
+					playing = false;
+				}
+
+				//frosty = setInterval(draw, 33);
+			});
+
+			socket.on('add_name1', function(data){
+
+				if(data.player=="p1"){
+					$('.name1').html(data.name);
+					p1 = data.name;
+					console.log(data.name+"owedk");
+				}
+				else
+				{
+					p2 = data.name;
+					$('.name2').html(data.name);
+				}
+				console.log(data.player+"player");
+			});
+
+			function shootout(){
+				$('#start').hide();
+				$('#counter').show();
+				var count = 3;
+				var timer = setInterval(function(){
+					if(count>0){
+						$('#counter').html(count);
+						count--;
+					}
+					else {
+						$('#counter').html('FIRE!');
+						clearInterval(timer);
+						socket.emit('begin');
+					}
+				}, 1000);
+			}
+
+			function primed(){
+
+			}
+
+
+	</script>
+</body>
+</html>
