@@ -1,6 +1,6 @@
 {
   "name": "quick_draw",
-  "version": "1.0",
+  "version": "0.1.2",
   "description": "Two Player Mexican quick draw game",
   "main": "app.js",
   "scripts": {
