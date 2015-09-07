@@ -26,6 +26,14 @@ app.get('/p2/:id', function(req, res){
    res.sendfile(__dirname + '/public/p2.html');
 });
 
+app.get('/p1/:id/css', function(req, res){
+   res.sendfile(__dirname + '/public/css');
+});
+
+app.get('/p1/:id/css', function(req, res){
+   res.sendfile(__dirname + '/public/images');
+});
+
 
 //------------------- express routes ends--------------------------------------//
 
