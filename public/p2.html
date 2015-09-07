@@ -18,7 +18,7 @@
 		var playing = false;
 		var wait = false;
 		//var socket = io.connect('http://192.168.1.165');
-		var baseURL = "https://leanback.herokuapp.com/";
+		var baseURL = "https://quick-draw.herokuapp.com/";
 		var socket = io.connect(baseURL);
 
 		url = document.URL;
@@ -50,7 +50,7 @@
 					socket.emit('add_name', {name: name1, player: 'p2',roomId : roomId});
 				}
 			}
-			
+
 			socket.on('started', function(){
 				playing = true;
 				//alert(playing);
