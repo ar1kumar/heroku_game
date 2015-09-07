@@ -1,12 +1,12 @@
 var express =require('express');
-  var express = require('express'),
-    app = express()
-  , http = require('http')
-  , server = http.createServer(app)
-  , io = require('socket.io').listen(server);
+var app = express();
+  // , http = require('http')
+  // , server = http.createServer(app)
+  // , io = require('socket.io').listen(server);
 
 // listen for new web clients:
-server.listen(5000);
+// server.listen(5000);
+var io = require('socket.io').listen(app.listen(process.env.PORT || 3000));
 
 //requests coming for desktop
 app.get('/', function(req, res){
