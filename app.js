@@ -20,7 +20,7 @@ app.get('/p1/:id', function(req, res){
 });
 
 app.get('/p2/:id', function(req, res){
-   res.sendfile(__dirname + '/public/p1.html');
+   res.sendfile(__dirname + '/public/p2.html');
 });
 
 
