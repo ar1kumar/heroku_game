@@ -50,13 +50,14 @@
 
 			//url for mobile generated
 			console.log('mobile-link- '+baseURL+'p1/'+roomId);
+			console.log('mobile-link- '+baseURL+'p2/'+roomId);
 
 			var playing = true;
 			//var socket = io.connect('http://192.168.1.165');
 			var p1 = "Player 1", p2 = "Player 2";
 
 			socket.on('fire', function(data){
-				console.log(data.player);
+				//console.log(data.player);
 				if(playing){
 					if(data.player=="p1"){
 						$('#p1').css('background-position', 'center');
@@ -89,13 +90,13 @@
 				if(data.player=="p1"){
 					$('.name1').html(data.name);
 					p1 = data.name;
-					console.log(data.name+"owedk");
+					//console.log(data.name+"owedk");
 				}
 				else{
 					p2 = data.name;
 					$('.name2').html(data.name);
 				}
-				console.log(data.player+"player");
+				//console.log(data.player+"player");
 			});
 
 			function shootout(){
