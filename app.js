@@ -8,6 +8,9 @@ var app = express();
 // server.listen(5000);
 var io = require('socket.io').listen(app.listen(process.env.PORT || 3000));
 
+// handle rest of the requests
+app.use(express.static(__dirname + '/public'));
+
 //requests coming for desktop
 app.get('/', function(req, res){
    res.sendfile(__dirname + '/public/index.html');
@@ -23,9 +26,6 @@ app.get('/p2/:id', function(req, res){
    res.sendfile(__dirname + '/public/p2.html');
 });
 
-
-// handle rest of the requests
-app.use(express.static(__dirname + '/public'));
 
 //------------------- express routes ends--------------------------------------//
 
