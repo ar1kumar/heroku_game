@@ -63,6 +63,22 @@
 				    return randomstring;
 				}
 
+				function shootout(){
+					$('#start').hide();
+					$('#counter').show();
+					var count = 3;
+					var timer = setInterval(function(){
+						if(count>0){
+							$('#counter').html(count);
+							count--;
+						}else {
+							$('#counter').html('FIRE!');
+							clearInterval(timer);
+							socket.emit('begin', {roomId : roomId });
+						}
+					}, 1000);
+				}
+
 
 
 				var baseURL = common.baseUrl.connect();
@@ -129,22 +145,6 @@
 					}
 					//console.log(data.player+"player");
 				});
-
-				function shootout(){
-					$('#start').hide();
-					$('#counter').show();
-					var count = 3;
-					var timer = setInterval(function(){
-						if(count>0){
-							$('#counter').html(count);
-							count--;
-						}else {
-							$('#counter').html('FIRE!');
-							clearInterval(timer);
-							socket.emit('begin', {roomId : roomId });
-						}
-					}, 1000);
-				}
 
 				function primed(){
 
