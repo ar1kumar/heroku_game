@@ -7,8 +7,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -19,7 +19,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -56,8 +56,8 @@ html,body,.wrapper,#gun{
 }
 
 #gun{
-	
-	
+
+
 }
 
 .name1{
@@ -159,9 +159,11 @@ html,body,.wrapper,#gun{
 	margin-top: -100px;
 	margin-left: -100px;
 	cursor: pointer;
+	font-weight: bold;
 }
 
 #start:hover {
+	font-weight: bold;
 	margin-top:-95px;
 	margin-left:-97.5px;
 	box-shadow: 5px 2.5px 0px rgba(120,80,0,0.8);
@@ -208,7 +210,7 @@ html,body,.wrapper,#gun{
     -moz-transform: rotate(-90deg) scaleX(-1);  /* Firefox 3.5-15 */
       -ms-transform: rotate(-90deg) scaleX(-1);  /* IE 9 */
         -o-transform: rotate(-90deg) scaleX(-1);  /* Opera 10.50-12.00 */
-         transform: rotate(-90deg) scaleX(-1);  
+         transform: rotate(-90deg) scaleX(-1);
 }
 
 .dead_2{
@@ -216,5 +218,15 @@ html,body,.wrapper,#gun{
     -moz-transform: rotate(90deg) ;  /* Firefox 3.5-15 */
       -ms-transform: rotate(90deg) ;  /* IE 9 */
         -o-transform: rotate(90deg) ;  /* Opera 10.50-12.00 */
-         transform: rotate(90deg) ;  
+         transform: rotate(90deg) ;
+}
+
+#faq_list li{
+	margin: 10px;
+}
+
+.roomId{
+	text-align: center;
+    font-size: 2em;
+    color: #fff;
 }

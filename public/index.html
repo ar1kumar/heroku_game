@@ -5,9 +5,17 @@
 	<title></title>
 	<link rel="stylesheet" href="css/custom.css" />
 	<script type="text/javascript" src="js/jquery.js"></script>
+
+	<!-- Materialize CSS and JS -->
+	<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="js/materialize.min.js"></script>
+	<script src="assets/utils.js"></script>
 </head>
 <body >
 	<div class="wrapper" id="wrapper">
+		<div class="roomId"></div>
 		<div class="name1">Player 1</div>
 		<div class="name2">Player 2</div>
 		<div id="ground"></div>
@@ -17,110 +25,132 @@
 		<div id="start" onclick="shootout()">PLAY</div>
 		<div id="counter"></div>
 		<audio src="../assets/Bang.mp3" id="bang"></audio>
+
+		<!-- Modal for instrcutions -->
+		<a class="modal-trigger waves-effect waves-light btn" href="#modal1" id="insBox">Instructions</a>
+
+	  <!-- Modal Structure -->
+	  <div id="modal1" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+	      <h4>How to Play?</h4>
+	      <ul id="faq_list">
+	      	<li>1. Connect your phone as a controller</li>
+					<li>2. Use the unique room ID to start your gaming session</li>
+					<li>3. Once both players are ready, press PLAY</li>
+					<li>4. Wait for the countdown to reach 0.</li>
+					<li>5. Fire</li>
+	      </ul>
+	    </div>
+	    <div class="modal-footer">
+	      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Ok</a>
+	    </div>
+	  </div>
+
 	</div>
 	<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript">
-		function randomString(len) {
-			    var chars = "1234567890abcdefghijklmnopqrstuvwxyz";
-			    //var chars = "1";
-			    var string_length = len;
-			    var randomstring = '';
-			    for (var i = 0; i < string_length; i++) {
-			        var rnum = Math.floor(Math.random() * chars.length);
-			        randomstring += chars.substring(rnum, rnum + 1);
-			    }
-			    return randomstring;
-			}
-
-			//var baseURL = "http://192.168.1.109:3000/"
-			var baseURL = "https://quick-draw.herokuapp.com/";
-			var roomURL = baseURL+"mobile/"+roomId;
-			var socket = io.connect(baseURL);
-			var roomId = randomString(4);
-			//var roomId = randomString(1);
-
-			//start a room
-			//generate url for mobile to join room
-			//restrict room for two clients
-			//listen for incoming actions
+		$(document).ready(function(){
+			function randomString(len) {
+				    //var chars = "1234567890abcdefghijklmnopqrstuvwxyz";
+				    var chars = "1234567890";
+				    //var chars = "1";
+				    var string_length = len;
+				    var randomstring = '';
+				    for (var i = 0; i < string_length; i++) {
+				        var rnum = Math.floor(Math.random() * chars.length);
+				        randomstring += chars.substring(rnum, rnum + 1);
+				    }
+				    return randomstring;
+				}
 
 
-			//room created
-			socket.emit('new_room', roomId);
 
-			//url for mobile generated
-			console.log('mobile-link- '+baseURL+'p1/'+roomId);
-			console.log('mobile-link- '+baseURL+'p2/'+roomId);
+				var baseURL = common.baseUrl.connect();
+				//var baseURL = "https://quick-draw.herokuapp.com/";
+				var roomURL = baseURL+"mobile/"+roomId;
+				var socket = io.connect(baseURL);
+				var roomId = randomString(4);
+				//var roomId = randomString(1);
 
-			var playing = true;
-			//var socket = io.connect('http://192.168.1.165');
-			var p1 = "Player 1", p2 = "Player 2";
+				//start a room
+				//generate url for mobile to join room
+				//restrict room for two clients
+				//listen for incoming actions
 
-			socket.on('fire', function(data){
-				//console.log(data.player);
-				if(playing){
+
+				//room created
+				socket.emit('new_room', roomId);
+
+				//Invoke the modal plugin
+				$('.modal').modal();
+				$('.roomId').html(roomId)
+				//url for mobile generated
+				console.log('mobile-link- '+baseURL+'p1/'+roomId);
+				console.log('mobile-link- '+baseURL+'p2/'+roomId);
+
+				var playing = true;
+				//var socket = io.connect('http://192.168.1.165');
+				var p1 = "Player 1", p2 = "Player 2";
+
+				socket.on('fire', function(data){
+					//console.log(data.player);
+					if(playing){
+						if(data.player=="p1"){
+							$('#p1').css('background-position', 'center');
+							$('#counter').html(p1+' WINS');
+							$('#p2').css({'background-position': 'bottom','top':'60%'});
+							$('#p2').addClass('dead_2');
+							console.log('1 wins');
+							var bang = $("#bang")[0];
+							bang.play();
+						}else {
+							$('#p2').css('background-position', 'center');
+							$('#counter').html(p2+' WINS');
+							$('#p1').css({'background-position': 'bottom','top':'60%'});
+							$('#p1').removeClass("flip").addClass('dead');
+							console.log('2 wins');
+							var bang = $("#bang")[0];
+							bang.play();
+						}
+
+						playing = false;
+					}
+					//frosty = setInterval(draw, 33);
+				});
+
+				socket.on('add_name1', function(data){
 					if(data.player=="p1"){
-						$('#p1').css('background-position', 'center');
-						$('#counter').html(p1+' WINS');
-						$('#p2').css({'background-position': 'bottom','top':'60%'});
-						$('#p2').addClass('dead_2');
-						console.log('1 wins');
-						var bang = $("#bang")[0];
-						bang.play();
-
+						$('.name1').html(data.name);
+						p1 = data.name;
+						//console.log(data.name+"owedk");
+					}else{
+						p2 = data.name;
+						$('.name2').html(data.name);
 					}
-					else {
-						$('#p2').css('background-position', 'center');
-						$('#counter').html(p2+' WINS');
-						$('#p1').css({'background-position': 'bottom','top':'60%'});
-						$('#p1').removeClass("flip").addClass('dead');
-						console.log('2 wins');
-						var bang = $("#bang")[0];
-						bang.play();
-					}
+					//console.log(data.player+"player");
+				});
 
-					playing = false;
+				function shootout(){
+					$('#start').hide();
+					$('#counter').show();
+					var count = 3;
+					var timer = setInterval(function(){
+						if(count>0){
+							$('#counter').html(count);
+							count--;
+						}else {
+							$('#counter').html('FIRE!');
+							clearInterval(timer);
+							socket.emit('begin', {roomId : roomId });
+						}
+					}, 1000);
 				}
 
-				//frosty = setInterval(draw, 33);
-			});
+				function primed(){
 
-			socket.on('add_name1', function(data){
-
-				if(data.player=="p1"){
-					$('.name1').html(data.name);
-					p1 = data.name;
-					//console.log(data.name+"owedk");
 				}
-				else{
-					p2 = data.name;
-					$('.name2').html(data.name);
-				}
-				//console.log(data.player+"player");
-			});
 
-			function shootout(){
-				$('#start').hide();
-				$('#counter').show();
-				var count = 3;
-				var timer = setInterval(function(){
-					if(count>0){
-						$('#counter').html(count);
-						count--;
-					}
-					else {
-						$('#counter').html('FIRE!');
-						clearInterval(timer);
-						socket.emit('begin', {roomId : roomId });
-					}
-				}, 1000);
-			}
-
-			function primed(){
-
-			}
-
-
+		})
 	</script>
 </body>
 </html>

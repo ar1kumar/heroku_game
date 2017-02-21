@@ -5,6 +5,12 @@
 	<title></title>
 	<link rel="stylesheet" href="../css/custom.css" />
 	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script src="../assets/utils.js"></script>
+	<!-- Materialize CSS and JS -->
+	<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="../css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="../js/materialize.min.js"></script>
 </head>
 <body onload="name()">
 	<div class="wrapper" id="bg">
@@ -17,8 +23,8 @@
 		var shaking = false;
 		var playing = false;
 		var wait = false;
-		//var socket = io.connect('http://192.168.1.165');
-		var baseURL = "https://quick-draw.herokuapp.com/";
+		//var baseURL = "https://quick-draw.herokuapp.com/";
+		var baseURL = common.baseUrl.connect();;
 		var socket = io.connect(baseURL);
 
 		url = document.URL;
@@ -28,8 +34,6 @@
 
 		//join room
 		socket.emit('new_room', roomId);
-
-
 			window.addEventListener('devicemotion', function(event) {
 				  var k = event.acceleration.x;
 				  if(k>5 && !shaking){
@@ -39,14 +43,11 @@
 						//playing = false;
 					  }
 				}
-
-
 			});
 
 			function name(){
 				var name1 = prompt("Enter Name");
 				if(name1!=null){
-
 					socket.emit('add_name', {name: name1, player: 'p2',roomId : roomId});
 				}
 			}
