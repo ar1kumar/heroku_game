@@ -23,7 +23,10 @@
 		<div id="p2"></div>
 		<div id="cactus"></div>
 		<div id="start" onclick="shootout()">PLAY</div>
-		<div id="counter"></div>
+		<div id="counter">
+			<!-- <p></p> -->
+			<!-- <button type="button" name="button" id="replay_btn" class="waves-effect waves-light btn" onclick="reset()">Play Again</button> -->
+		</div>
 		<audio src="../assets/Bang.mp3" id="bang"></audio>
 
 		<!-- Modal for instrcutions -->
@@ -35,15 +38,17 @@
 	      <h4>How to Play?</h4>
 	      <ul id="faq_list">
 	      	<li>1. Connect your phone as a controller</li>
-					<li>2. Use the unique room ID to start your gaming session</li>
+					<li>
+						2. Use the unique room ID to start your gaming session
+						<p id="playerOneInfo"></p>
+						<p id="playerTwoInfo"></p>
+					</li>
 					<li>3. Once both players are ready, click on PLAY</li>
-					<li>4. Hold your phone(near the hip) like a gun by pointing it towards the ground</li>
+					<li>4. Ever held a gun? Hold your phone the same way. If not, place it near your hip and point it towards the ground</li>
 					<li>5. Wait for the countdown to reach 0</li>
-					<li>6. To fire your gun draw your phone from the current position and point it towards your opponent</li>
+					<li>6. To fire, pick your gun (phone) up and point it towards your opponent (obviously, the screen) – you have to do it super-quick</li>
 
 	      </ul>
-				<p id="playerOneInfo"></p>
-				<p id="playerTwoInfo"></p>
 	    </div>
 	    <div class="modal-footer">
 	      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Ok</a>
@@ -105,8 +110,8 @@
 				$('.modal').modal();
 				$('.roomId').html(roomId)
 				//url for mobile generated
-				console.log('mobile-link- '+baseURL+'p1/'+roomId);
-				console.log('mobile-link- '+baseURL+'p2/'+roomId);
+				console.log('mobile-link- '+baseURL+'/p1/'+roomId);
+				console.log('mobile-link- '+baseURL+'/p2/'+roomId);
 				//show the player connection string in the instructions popup
 				$('#playerOneInfo').html('Player #1 - '+baseURL+'p1/'+roomId);
 				$('#playerTwoInfo').html('Player #2 - '+baseURL+'p2/'+roomId);

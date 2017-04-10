@@ -230,3 +230,7 @@ html,body,.wrapper,#gun{
     font-size: 2em;
     color: #fff;
 }
+
+#replay_btn{
+	/*display: none;*/
+}
