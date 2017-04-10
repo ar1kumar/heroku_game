@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/materialize.min.css">
   <!-- Compiled and minified JavaScript -->
   <script src="js/materialize.min.js"></script>
-	<script src="assets/utils.js"></script>
+	<script src="../assets/utils.js"></script>
 </head>
 <body >
 	<div class="wrapper" id="wrapper">
@@ -40,6 +40,8 @@
 					<li>4. Wait for the countdown to reach 0.</li>
 					<li>5. Fire</li>
 	      </ul>
+				<p id="playerOneInfo"></p>
+				<p id="playerTwoInfo"></p>
 	    </div>
 	    <div class="modal-footer">
 	      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Ok</a>
@@ -101,8 +103,11 @@
 				$('.modal').modal();
 				$('.roomId').html(roomId)
 				//url for mobile generated
-				console.log('mobile-link- '+baseURL+'p1/'+roomId);
-				console.log('mobile-link- '+baseURL+'p2/'+roomId);
+				console.log('mobile-link- '+baseURL+'/p1/'+roomId);
+				console.log('mobile-link- '+baseURL+'/p2/'+roomId);
+				//show the player connection string in the instructions popup
+				$('#playerOneInfo').html('Player #1 - '+baseURL+'/p1/'+roomId);
+				$('#playerTwoInfo').html('Player #2 - '+baseURL+'/p2/'+roomId);
 
 				var playing = true;
 				//var socket = io.connect('http://192.168.1.165');
