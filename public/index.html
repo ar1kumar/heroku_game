@@ -103,11 +103,11 @@
 				$('.modal').modal();
 				$('.roomId').html(roomId)
 				//url for mobile generated
-				console.log('mobile-link- '+baseURL+'/p1/'+roomId);
-				console.log('mobile-link- '+baseURL+'/p2/'+roomId);
+				console.log('mobile-link- '+baseURL+'p1/'+roomId);
+				console.log('mobile-link- '+baseURL+'p2/'+roomId);
 				//show the player connection string in the instructions popup
-				$('#playerOneInfo').html('Player #1 - '+baseURL+'/p1/'+roomId);
-				$('#playerTwoInfo').html('Player #2 - '+baseURL+'/p2/'+roomId);
+				$('#playerOneInfo').html('Player #1 - '+baseURL+'p1/'+roomId);
+				$('#playerTwoInfo').html('Player #2 - '+baseURL+'p2/'+roomId);
 
 				var playing = true;
 				//var socket = io.connect('http://192.168.1.165');
