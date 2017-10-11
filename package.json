@@ -9,7 +9,7 @@
   "dependencies": {
     "express": "*",
     "socket.io-client": "*",
-    "socket.io":"*"
+    "socket.io": "*"
   },
   "engines": {
     "node": "*"
